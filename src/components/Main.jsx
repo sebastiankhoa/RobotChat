@@ -1,9 +1,9 @@
-import { Button, Center, Container, Flex, Image, Input, Text } from "@chakra-ui/react";
-import React, { useEffect, useRef, useState } from "react";
+import { Button, Center, Container, Flex, Input } from "@chakra-ui/react";
+import React, { useState } from "react";
 import { BiRightArrow } from "react-icons/bi";
+import { BounceLoader, PropagateLoader } from "react-spinners";
 import { useRecoilState } from "recoil";
 import Chatbox from "./Chatbox";
-import { PropagateLoader, BounceLoader } from "react-spinners";
 
 import { chatState } from "../atom/chatLogState";
 
@@ -11,16 +11,6 @@ const Main = () => {
 	const [input, setInput] = useState("");
 	const [loading, setLoading] = useState(false);
 	const [chatLog, setChatLog] = useRecoilState(chatState);
-
-	const messageRef = useRef(null);
-
-	useEffect(() => {
-		const scrollToBottom = () => {
-			messageRef.current.scrollIntoView({ behavior: "smooth" });
-		};
-
-		scrollToBottom();
-	}, [chatLog]);
 
 	//Handle submit
 	const handleSubmit = async (e) => {
@@ -66,7 +56,7 @@ const Main = () => {
 					</Center>
 				</Flex>
 			) : (
-				<Flex direction="column" flex={1} overflowY="scroll" ref={messageRef}>
+				<Flex direction="column" flex={1} overflowY="scroll">
 					<Container maxW="container.lg">
 						{chatLog.map((chat, _i) =>
 							chat.user === "ai" && loading ? (
